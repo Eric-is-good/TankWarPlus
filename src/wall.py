@@ -59,7 +59,7 @@ class Map():
             self.brickGroup.add(self.brick)
         
         # 画石头
-        for x, y in [(0,14),(1,14),(12,6),(13,6),(12,7),(13,7),(24,14),(25,14)]:
+        for x, y in [(0,14),(1,14),(12,18),(13,18),(24,14),(25,14),(6,18),(6,19),(18,18),(18,19)]:
             self.iron = Iron()
             self.iron.rect.left, self.iron.rect.top = 3 + x * 24, 3 + y * 24
             self.ironGroup.add(self.iron)

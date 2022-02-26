@@ -5,7 +5,8 @@ import sys
 import traceback
 import wall
 import myTank
-import enemyTank
+# import enemyTank
+import superEnemy
 import food
 from pygame.locals import *
 
@@ -22,6 +23,7 @@ def main():
     #############################################  选择   ########################################
 
     num_of_tank = start_game()
+    nandu = 0.7
 
     ##############################################################################################
 
@@ -62,7 +64,8 @@ def main():
 
     # 创建敌方 坦克
     for i in range(1, 4):
-        enemy = enemyTank.EnemyTank(i)
+        # enemy = enemyTank.EnemyTank(i)
+        enemy = superEnemy.SuperEnemy(i)
         allTankGroup.add(enemy)
         allEnemyGroup.add(enemy)
         if enemy.isred == True:
@@ -127,7 +130,8 @@ def main():
             # 创建敌方坦克延迟
             if event.type == DELAYEVENT:
                 if enemyNumber < 4:
-                    enemy = enemyTank.EnemyTank()
+                    # enemy = enemyTank.EnemyTank()
+                    enemy = superEnemy.SuperEnemy()
                     if pygame.sprite.spritecollide(enemy, allTankGroup, False, None):
                         break
                     allEnemyGroup.add(enemy)
@@ -302,7 +306,7 @@ def main():
         # 画砖块
         for each in bgMap.brickGroup:
             screen.blit(each.image, each.rect)
-            # 花石头
+            # 画石头
         for each in bgMap.ironGroup:
             screen.blit(each.image, each.rect)
             # 画home
@@ -315,6 +319,10 @@ def main():
             switch_R1_R2_image = not switch_R1_R2_image
         if switch_R1_R2_image and running_T1:
             screen.blit(myTank_T1.tank_R0, (myTank_T1.rect.left, myTank_T1.rect.top))
+
+            dx = myTank_T1.rect.left
+            dy = myTank_T1.rect.top
+
             running_T1 = False
         else:
             screen.blit(myTank_T1.tank_R1, (myTank_T1.rect.left, myTank_T1.rect.top))
@@ -334,13 +342,13 @@ def main():
                     screen.blit(each.tank_R0, (each.rect.left, each.rect.top))
                     if enemyCouldMove:
                         allTankGroup.remove(each)
-                        each.move(allTankGroup, bgMap.brickGroup, bgMap.ironGroup)
+                        each.move(allTankGroup, bgMap.brickGroup, bgMap.ironGroup, each.rect.left, each.rect.top, dx, dy, nandu)
                         allTankGroup.add(each)
                 else:
                     screen.blit(each.tank_R1, (each.rect.left, each.rect.top))
                     if enemyCouldMove:
                         allTankGroup.remove(each)
-                        each.move(allTankGroup, bgMap.brickGroup, bgMap.ironGroup)
+                        each.move(allTankGroup, bgMap.brickGroup, bgMap.ironGroup, each.rect.left, each.rect.top, dx, dy, nandu)
                         allTankGroup.add(each)
             else:
                 # 播放5毛钱特效
