@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from start_choose import start_game
 import pygame
 import sys
 import traceback
@@ -7,15 +7,26 @@ import wall
 import myTank
 import enemyTank
 import food
+from pygame.locals import *
 
-
-def main(num_of_tank):
+def main():
+    num_of_tank = 1
     pygame.init()
     pygame.mixer.init()
 
     resolution = 630, 630
     screen = pygame.display.set_mode(resolution)
     pygame.display.set_caption("Tank War ")
+
+
+    #############################################  选择   ########################################
+
+    num_of_tank = start_game()
+
+    ##############################################################################################
+
+    print("进入第二阶段")
+
 
     # 加载图片,音乐,音效.
     background_image = pygame.image.load(r"..\image\background.png")
@@ -517,7 +528,7 @@ def main(num_of_tank):
 if __name__ == "__main__":
     try:
         # 新增双人模式
-        main(1)
+        main()
     except SystemExit:
         pass
     except:
